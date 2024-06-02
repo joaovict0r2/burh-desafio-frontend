@@ -5,7 +5,16 @@ export default defineNuxtConfig({
     baseURL: process.env.BASE_URL
   },
   css: [
-    'assets/css/fonts.css',
-    'assets/css/app.css'
-  ]
+    'assets/css/fonts.scss',
+    'assets/css/app.scss'
+  ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "@/assets/css/_mixins.scss";'
+        }
+      }
+    }
+  }
 })
