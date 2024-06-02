@@ -4,6 +4,12 @@
       <h2>Introduce Your Product Quickly & Effectively</h2>
       <p>Millions of businesses of all sizes — from startups to large enterprises — use this product to accept payments,
         send payouts, and manage their businesses online.</p>
+
+      <div class="checkin__signin">
+        <TextField placeholder="Entre com o seu nome" v-model="formData.name" @change="v$.name.$touch"
+          :error="isInputEmpty" />
+        <CButton text="Entrar" :width="'120px'" @click="signin" />
+      </div>
     </div>
 
     <div class="checkin__banner">
@@ -13,7 +19,27 @@
 </template>
 
 <script setup lang='ts'>
+import { reactive, ref } from 'vue'
+import { required } from '@vuelidate/validators'
+import useVuelidate from '@vuelidate/core'
 
+const isInputEmpty = ref(null)
+
+const formData = reactive({ name: '' })
+const rules = { name: { required } }
+
+const v$ = useVuelidate(rules, formData)
+
+async function signin() {
+  const isFormValid = await v$.value.$validate()
+
+  if (!isFormValid) {
+    isInputEmpty.value = true
+    return
+  }
+
+  console.log(formData)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -28,6 +54,7 @@
   @include lg {
     display: grid;
     grid-template-columns: minmax(600px, 500px) 1fr;
+    justify-items: center;
   }
 
   &__cover {
@@ -35,24 +62,23 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    // margin-left: 40px;
+    width: 500px;
 
     h2 {
       font-size: 60px;
       font-weight: 700;
-
-      @include lg {
-        width: 500px;
-      }
     }
 
     p {
       margin-top: 16px;
-
-      @include lg {
-        width: 500px;
-      }
     }
+  }
+
+  &__signin {
+    width: 500px;
+    display: flex;
+    gap: 6px;
+    margin-top: 20px;
   }
 
   &__banner {
