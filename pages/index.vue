@@ -22,8 +22,10 @@
 import { reactive, ref } from 'vue'
 import { required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
+import { useUserStore } from '../store/UserStore'
 
-const isInputEmpty = ref(null)
+const userStore = useUserStore()
+const isInputEmpty = ref<boolean>()
 
 const formData = reactive({ name: '' })
 const rules = { name: { required } }
@@ -38,13 +40,11 @@ async function signin() {
     return
   }
 
-  console.log(formData)
+  userStore.signin({ name: formData.name })
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/css/animations/slide-in.scss';
-
 .checkin {
   height: 100vh;
   display: flex;

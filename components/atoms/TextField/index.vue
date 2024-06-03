@@ -28,7 +28,6 @@ const props = defineProps<Props>()
 
   &--invalid {
     animation: shake .2s ease-in-out 0s 2;
-    // box-shadow: 0 0 0.6rem #ff0000;
   }
 
   &::placeholder {
