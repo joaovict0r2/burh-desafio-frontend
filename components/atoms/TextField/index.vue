@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang='ts'>
-const inputValue = ref<string>(null)
+const inputValue = ref<string>()
 
 type Props = {
   type?: string
