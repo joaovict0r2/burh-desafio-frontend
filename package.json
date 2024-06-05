@@ -11,17 +11,17 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.5.1",
+    "@tiptap/extension-underline": "^2.4.0",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "nuxt": "^3.11.2",
+    "nuxt-tiptap-editor": "^1.1.2",
     "pinia": "^2.1.7",
     "vue": "^3.4.27",
+    "vue-material-design-icons": "^5.3.0",
     "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "sass": "^1.77.4"
-  },
-  "overrides": {
-    "vue": "latest"
   }
 }

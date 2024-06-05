@@ -12,9 +12,7 @@
         </div>
 
         <div v-if="job.tags?.length" class="jobs__card-tags">
-          <div v-for="tag in job.tags" :key="tag.id" class="jobs__card-tag">
-            {{  tag.title }}
-          </div>
+          <Tag v-for="tag in job.tags" :key="tag.id" :label="tag.title" />
         </div>
 
         <span class="jobs__card-date">Hoje</span>
@@ -166,15 +164,6 @@ const jobs = [
     margin-top: 18px;
     display: flex;
     gap: 8px;
-  }
-
-  &__card-tag {
-    padding: 5px 12px;
-    font-size: 14px;
-    line-height: 100%;
-    font-weight: 500;
-    border-radius: 25px;
-    background-color: #0eaa991c;
   }
 
   &__card-date {

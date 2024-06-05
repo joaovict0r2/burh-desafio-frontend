@@ -33,6 +33,7 @@ const rules = { name: { required } }
 const v$ = useVuelidate(rules, formData)
 
 async function signin() {
+  console.log('sdsd')
   const isFormValid = await v$.value.$validate()
 
   if (!isFormValid) {

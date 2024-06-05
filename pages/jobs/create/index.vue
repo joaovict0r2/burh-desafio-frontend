@@ -1,11 +1,29 @@
 <template>
-  <form class="form">
-    <p class="form__title">Informações da vaga</p>
+  <section class="create-job">
+    <p class="create-job__title">Informações da vaga</p>
 
-    <TextField label="Nome" v-model="formData.job_title" placeholder="Nome da vaga" class="form__field"/>
-    <TextField label="Empresa" v-model="formData.job_title" placeholder="Empresa responsável pela vaga" class="form__field"/>
-    <Select />
-  </form>
+    <form @submit.prevent="submitForm" class="create-job__form">  
+      <TextField
+        label="Nome"
+        class="create-job__field"
+        v-model="form.title"
+        placeholder="Nome da vaga"
+      />
+
+      <TextField
+        label="Empresa"
+        class="create-job__field"
+        v-model="form.company"
+        placeholder="Empresa responsável pela vaga"
+      />
+
+      <TagsManager class="create-job__field" />
+
+      <Editor class="create-job__field" label="Descrição da vaga" v-model="form.description" />
+
+      <button type="submit">Criar vaga</button>
+    </form>
+  </section>
 </template>
   
 <script setup lang='ts'>
@@ -13,40 +31,29 @@ definePageMeta({
   layout: "navbar"
 })
 
-const formData = reactive({ 
-  job_title: '',
-  job_company: '',
-  job_from: '',
+const form = reactive({ 
+  title: '',
+  company: '',
+  from: '',
   avatar: '',
+  description: ''
 })
 
-// {
-//     id: 1,
-//     job_title: "Sr Backend Developer",
-//     job_company: 'Invillia',
-//     from: "Linkedin",
-//     avatar: '/assets/images/chainguard.png',
-//     tags: [
-//       { 
-//         id: 324,
-//         title: '100% Remoto' 
-//       },
-//       { 
-//         id: 325,
-//         title: 'Senior'
-//       }
-//     ]
-//   },
+function submitForm() {
+  console.log(form)
+}
 </script>
   
 <style lang="scss" scoped>
-.form {
-  padding: 16px;
-
+.create-job {
   &__title {
     font-size: 20px; 
     font-weight: 600;
     margin-bottom: 25px;
+  }
+
+  &__form {
+    padding: 16px;
   }
 
   &__field {

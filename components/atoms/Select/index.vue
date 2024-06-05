@@ -1,22 +1,47 @@
 <template>
   <div class="select">
     <div class="select__field">
-      <TextField placeholder="Selecione as tags da vaga" label="Tags" @on-focus="toggleSelectState" @on-blur="toggleSelectState"/>
-      <img class="select__icon" :class="{'select__icon--active': isSelectOpened }" src="/assets/images/small-up.svg" alt="arrow icon">
+      <TextField
+        label="Tags"
+        placeholder="Selecione as tags da vaga"
+        @click="toggleSelectState"
+      />
+      <img
+        alt="arrow icon"
+        src="/assets/images/small-down.svg"
+        class="select__icon"
+        :class="{'select__icon--active': isSelectOpened }"
+      >
     </div>
 
     <div v-show="isSelectOpened" class="select__dropdown">
-      <p v-for="tag in tags" :key="tag" class="select__tag" @click="$emit('handle-selected-tag', tag)">{{ tag }}</p>
+      <p
+        v-for="tag in tags"
+        :key="tag.id"
+        class="select__tag"
+        @click="handleTagClick(tag)"
+      >
+        {{ tag.title }}
+      </p>
     </div>
   </div>
 </template>
   
 <script setup lang='ts'>
 import { tags } from '~/mocks/tags';
+type Tag = {
+  id: number,
+  title: string
+}
 
-defineEmits(['handle-selected-tag'])
+const emit = defineEmits(['handle-selected-tag'])
 
 const isSelectOpened = ref(false)
+
+function handleTagClick(tag: Tag) {
+  emit('handle-selected-tag', tag)
+  toggleSelectState()
+}
 
 function toggleSelectState() {
   isSelectOpened.value = !isSelectOpened.value
@@ -25,7 +50,8 @@ function toggleSelectState() {
   
 <style lang="scss" scoped>
 .select {
-  
+  position: relative;
+
   &__field {
     position: relative; 
   }
@@ -37,7 +63,7 @@ function toggleSelectState() {
     transition: all .2s ease;
 
     &--active {
-      transform: rotate(180deg);
+      transform: rotate(-180deg);
     }
   }
 
@@ -46,6 +72,8 @@ function toggleSelectState() {
     margin-top: 10px;
     background-color: $gray-100;
     border-radius: 8px;
+    overflow: auto;
+    position: absolute;
   }
 
   &__tag {

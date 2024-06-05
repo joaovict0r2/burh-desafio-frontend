@@ -1,11 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  alias: {
-    "@Components": "./components"
-  },
+  modules: ['@pinia/nuxt', "nuxt-tiptap-editor"],
   app: {
     baseURL: process.env.BASE_URL,
+  },
+  alias: {
+    "@Components": "./components"
   },
   css: [
     'assets/css/fonts.scss',
@@ -20,6 +21,8 @@ export default defineNuxtConfig({
       }
     }
   },
-  components: [{ path: '~/components', pathPrefix: false }],
-  modules: ['@pinia/nuxt']
+  tiptap: {
+    prefix: "Tiptap"
+  },
+  components: [{ path: '~/components', pathPrefix: false }]
 })

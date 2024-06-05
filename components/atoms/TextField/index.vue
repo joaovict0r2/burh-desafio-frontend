@@ -1,22 +1,32 @@
 <template>
   <div class="input">
     <label for="input" class="input__label">{{ props.label }}</label>
-    <input v-model="inputValue" id="input" :placeholder="props.placeholder" class="input__field"
-      :class="{ 'textfield--invalid': error }" :type="type" @focus="$emit('on-focus')" @blur="$emit('on-blur')" />
+    <input
+      id="input"
+      class="input__field"
+      :class="{ 'textfield--invalid': error }"
+      :placeholder="props.placeholder"
+      :type="type"
+      :value="props.modelValue"
+      @input="updateModelValue"
+    />
   </div>
 </template>
 
 <script setup lang='ts'>
-const inputValue = ref<string>()
+const emit = defineEmits(['update:modelValue'])
+const props = defineProps({
+  type: String,
+  placeholder: String,
+  label: String,
+  error: Boolean,
+  modelValue: String
+})
 
-type Props = {
-  type?: string
-  placeholder?: string
-  error?: boolean
-  label?: string
+
+function updateModelValue(event: any) {
+  emit('update:modelValue', event.target.value)
 }
-
-const props = defineProps<Props>()
 </script>
 
 <style lang="scss" scoped>
