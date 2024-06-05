@@ -1,7 +1,5 @@
 <template>
   <div class="jobs">
-    <Header />
-
     <div class="jobs__list">
       <div v-for="job in jobs" :key="job.id" class="jobs__card">
         <div class="jobs__card-header">
@@ -26,6 +24,10 @@
 </template>
 
 <script setup lang='ts'>
+definePageMeta({
+  layout: 'navbar'
+})
+
 const jobs = [
   {
     id: 1,
@@ -79,6 +81,34 @@ const jobs = [
   },
   {
     id: 6,
+    job_title: "Sr Backend Developer",
+    job_company: 'Invillia',
+    from: "Linkedin",
+    avatar: ''
+  },
+  {
+    id: 7,
+    job_title: "Sr Backend Developer",
+    job_company: 'Invillia',
+    from: "Linkedin",
+    avatar: ''
+  },
+  {
+    id: 7,
+    job_title: "Sr Backend Developer",
+    job_company: 'Invillia',
+    from: "Linkedin",
+    avatar: ''
+  },
+  {
+    id: 7,
+    job_title: "Sr Backend Developer",
+    job_company: 'Invillia',
+    from: "Linkedin",
+    avatar: ''
+  },
+  {
+    id: 7,
     job_title: "Sr Backend Developer",
     job_company: 'Invillia',
     from: "Linkedin",

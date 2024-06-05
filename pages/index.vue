@@ -54,7 +54,7 @@ async function signin() {
   @include lg {
     display: grid;
     grid-template-columns: minmax(600px, 500px) 1fr;
-    justify-items: center;
+    justify-items: end;
   }
 
   &__cover {

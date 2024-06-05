@@ -1,0 +1,62 @@
+<template>
+  <div class="select">
+    <div class="select__field">
+      <TextField placeholder="Selecione as tags da vaga" label="Tags" @on-focus="toggleSelectState" @on-blur="toggleSelectState"/>
+      <img class="select__icon" :class="{'select__icon--active': isSelectOpened }" src="/assets/images/small-up.svg" alt="arrow icon">
+    </div>
+
+    <div v-show="isSelectOpened" class="select__dropdown">
+      <p v-for="tag in tags" :key="tag" class="select__tag" @click="$emit('handle-selected-tag', tag)">{{ tag }}</p>
+    </div>
+  </div>
+</template>
+  
+<script setup lang='ts'>
+import { tags } from '~/mocks/tags';
+
+defineEmits(['handle-selected-tag'])
+
+const isSelectOpened = ref(false)
+
+function toggleSelectState() {
+  isSelectOpened.value = !isSelectOpened.value
+}
+</script>
+  
+<style lang="scss" scoped>
+.select {
+  
+  &__field {
+    position: relative; 
+  }
+
+  &__icon {
+    position: absolute;
+    right: 15px;
+    bottom: 12px;
+    transition: all .2s ease;
+
+    &--active {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__dropdown {
+    max-height: 200px;
+    margin-top: 10px;
+    background-color: $gray-100;
+    border-radius: 8px;
+  }
+
+  &__tag {
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $gray-200;
+      transition: all .2s;
+    }
+  }
+}
+</style>

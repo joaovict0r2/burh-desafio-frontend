@@ -24,7 +24,7 @@ const width = computed(() => props.width)
   color: white;
   background-color: $green-200;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
   cursor: pointer;
 
