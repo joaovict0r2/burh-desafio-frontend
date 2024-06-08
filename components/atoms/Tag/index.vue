@@ -1,6 +1,6 @@
 <template>
   <div class="tag" :class="{'tag--transparent': props.color === 'transparent'}">
-    <img v-if="deleteable" src="/assets/images/cross-small.svg" alt="remove icon">
+    <img v-if="deleteable" src="/assets/images/cross-small.svg" alt="remove icon" @click="$emit('remove-tag')">
     <p>{{ props.label }}</p>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="jobs">
     <div class="jobs__list">
-      <div v-for="job in jobs" :key="job.id" class="jobs__card">
+      <div v-for="job in jobs" :key="job.id" class="jobs__card" @click="handleJobCard(job.id)">
         <div class="jobs__card-header">
           <img src="/assets/images/tripadvisor.webp" alt="">
 
@@ -120,6 +120,10 @@ const jobs = [
     avatar: ''
   },
 ]
+
+function handleJobCard(jobId: number) {
+  navigateTo(`jobs/${jobId}`)
+}
 </script>
 
 <style lang="scss" scoped>

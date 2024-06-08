@@ -68,12 +68,15 @@ function toggleSelectState() {
   }
 
   &__dropdown {
+    width: 100%;
     max-height: 200px;
     margin-top: 10px;
     background-color: $gray-100;
     border-radius: 8px;
     overflow: auto;
     position: absolute;
+    z-index: 1;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   }
 
   &__tag {

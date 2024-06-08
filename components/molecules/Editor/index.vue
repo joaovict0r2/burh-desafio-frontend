@@ -89,7 +89,10 @@ const editor = useEditor({
   onUpdate: ({ editor }) => {
     emit('update:modelValue', editor.getHTML())
   },
-  extensions: [TiptapStarterKit, Underline],
+  extensions: [TiptapStarterKit, Underline, ],
+  parseOptions: {
+    preserveWhitespace: 'full'
+  }
 });
 
 onBeforeUnmount(() => {

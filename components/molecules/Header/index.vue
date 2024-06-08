@@ -1,14 +1,14 @@
 <template>
   <div class="header">
     <div class="header__content">
-      <div v-if="props.pathName !== 'jobs-create'" class="header__text">
+      <div v-if="!isHeaderContentEnable" class="header__text">
         <h2>
           Discover the best remote jobs to work from home
         </h2>
         <p>Browse thousands of remote job listings to work at startups and leading companies.</p>
       </div>
   
-      <CButton text="Publicar uma vaga" mode="transparent" height="40px" width="100%" @click="handleCreateJob"/>
+      <CButton text="Publicar uma vaga" mode="transparent" height="40px" width="100%" @click="createJob"/>
     </div>
   
     <img src="/assets/images/waves.svg" alt="wave-shape">
@@ -16,24 +16,23 @@
 </template>
   
 <script setup lang='ts'>
+import type { PropType } from 'vue';
 import type { RouteRecordName } from 'vue-router';
 
-type Props = {
-  pathName?: RouteRecordName | null
-}
+const props = defineProps({
+  pathName: String as PropType<RouteRecordName | null>
+})
 
-const props = defineProps<Props>()
+const isHeaderContentEnable = computed(() => {
+  const notAllowedPaths = [
+    'jobs-create',
+    'jobs-id'
+  ]
 
-function headerAttributes(test: any) {
-  return {
-    'jobs-create': {
-      title: 'Discover the best remote jobs to work from home',
-      description: 'Browse thousands of remote job listings to work at startups and leading companies.'
-    }
-  }
-}
+  return notAllowedPaths.includes(props.pathName as string)
+})
 
-function handleCreateJob() {
+function createJob() {
   navigateTo('jobs/create')
 }
 </script>

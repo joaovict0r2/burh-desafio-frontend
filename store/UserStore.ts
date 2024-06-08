@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    name: ''
+    name: '',
+    description: ''
   }),
 
   getters: {
@@ -12,6 +13,7 @@ export const useUserStore = defineStore('user', {
   actions: {
     signin({ name }: { name: string }) {
       this.name = name
+      this.description = name
       navigateTo('/jobs')
     }
   }
