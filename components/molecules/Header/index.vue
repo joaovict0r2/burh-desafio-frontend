@@ -25,8 +25,9 @@ const props = defineProps({
 
 const isHeaderContentEnable = computed(() => {
   const notAllowedPaths = [
+    'jobs-edit-id',
     'jobs-create',
-    'jobs-id'
+    'jobs-id',
   ]
 
   return notAllowedPaths.includes(props.pathName as string)

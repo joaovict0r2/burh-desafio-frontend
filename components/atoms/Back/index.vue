@@ -1,13 +1,14 @@
 <template>
-  <div class="back">
+  <NuxtLink class="back" :to="path">
     <ChevronLeft />
-    <p>Back</p>
-  </div>
+    Back
+  </NuxtLink>
 </template>
   
 <script setup>
 import ChevronLeft from 'vue-material-design-icons/ChevronLeft'
   
+defineProps({ path: String })
 </script>
   
 <style>
@@ -16,6 +17,8 @@ import ChevronLeft from 'vue-material-design-icons/ChevronLeft'
   height: 18px;
   margin-left: -5px;
   cursor: pointer;
+  text-decoration: none;
+  color: black;
 
   svg {
     width: 18px;

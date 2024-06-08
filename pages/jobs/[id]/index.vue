@@ -1,22 +1,22 @@
 <template>
   <div class="job">
-    <Back class="job__back-icon"/>
+    <Back class="job__back-icon" path="/jobs" />
     
     <section class="job__header">
       <div class="job__header-icon">
-        <h1 class="job__title">Sr Backend Developer</h1>
+        <h1 class="job__title">{{ job?.title }}</h1>
         <!-- <DotsCircle /> -->
         <button @click="handleEditJob">editar</button>
         <button @click="handleDeleteJob">deletar</button>
       </div>
-      <span>Invillia</span>
+      <span>{{ job?.company }}</span>
       <p>A experiência de trabalhar na Invillia é única. E global. Temos o nosso próprio jeito de conectar talentos e construir inovações.</p>
 
-      <div class="job__tags">
+      <div class="job__tags" v-if="job?.selectedTags.length">
         <Tag 
-          v-for="tag in tags"
-          :label="tag.title"
+          v-for="tag in job?.selectedTags"
           :key="tag.id"
+          :label="tag.title"
         />
       </div>
     </section>
@@ -27,37 +27,37 @@
         <p>Sobre</p>
       </div>
 
-      <p v-html="userStore.username" class="job__content" />
+      <p v-html="job?.description" class="job__content" />
     </section>
   </div>
 </template>
   
-<script setup>
+<script setup lang="ts">
 import OutlineListBox from 'vue-material-design-icons/ListBoxOutline.vue'
 import DotsCircle from 'vue-material-design-icons/DotsVerticalCircleOutline.vue'
-import { useUserStore } from '~/store/UserStore';
 
-definePageMeta({
-  layout: "navbar"
-})
-
-const userStore = useUserStore()
+definePageMeta({ layout: "navbar" })
 const jobId = useRoute().params.id
-const tags = [
-  { id: 1, title: '100% Remoto'},
-  { id: 2, title: 'CLT'},
-  { id: 3, title: 'Senior'},
-]
 
-function handleEditJob() {
-  navigateTo({
-    path: 'create',
-    query: { jobId }
-  })
+const { data: job } = useFetch(`https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs/${jobId}`)
+
+async function handleDeleteJob() {
+  try {
+    const { data: response } = await useFetch(
+      `https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs/${jobId}`, {
+        method: 'DELETE',
+      }
+    )
+
+    console.log(response)
+    navigateTo('/jobs')
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-function handleDeleteJob() {
-  console.log(jobId)
+function handleEditJob() {
+  navigateTo(`edit/${jobId}`)
 }
 </script>
   

@@ -1,18 +1,18 @@
 <template>
   <div class="jobs">
     <div class="jobs__list">
-      <div v-for="job in jobs" :key="job.id" class="jobs__card" @click="handleJobCard(job.id)">
+      <div v-for="job in jobs" :key="job.title" class="jobs__card" @click="handleJobCard(job._id)">
         <div class="jobs__card-header">
           <img src="/assets/images/tripadvisor.webp" alt="">
 
           <div>
-            <p>{{ job.job_title }}</p>
-            <p>{{ job.job_company }}</p>
+            <p>{{ job.title }}</p>
+            <p>{{ job.company }}</p>
           </div>
         </div>
 
-        <div v-if="job.tags?.length" class="jobs__card-tags">
-          <Tag v-for="tag in job.tags" :key="tag.id" :label="tag.title" />
+        <div v-if="job.selectedTags?.length" class="jobs__card-tags">
+          <Tag v-for="tag in job.selectedTags" :key="tag.id" :label="tag.title" />
         </div>
 
         <span class="jobs__card-date">Hoje</span>
@@ -26,102 +26,20 @@ definePageMeta({
   layout: 'navbar'
 })
 
-const jobs = [
-  {
-    id: 1,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: '/assets/images/chainguard.png',
-    tags: [
-      { 
-        id: 324,
-        title: '100% Remoto' 
-      },
-      { 
-        id: 325,
-        title: 'Senior'
-      }
-    ]
-  },
-  {
-    id: 2,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: '/assets/images/chainguard.png',
-    tags: [
-      { id: 326, title: '100% Remoto' },
-      { id: 327, title: 'Senior' },
-      { id: 328, title: 'CLT' }
-    ]
-  },
-  {
-    id: 3,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 4,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 5,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 6,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 7,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 7,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 7,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 7,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-  {
-    id: 7,
-    job_title: "Sr Backend Developer",
-    job_company: 'Invillia',
-    from: "Linkedin",
-    avatar: ''
-  },
-]
+type Jobs = {
+  title: string
+  company: string
+  description: string
+  selectedTags: Array<{
+    id: number
+    title: string
+  }>
+}
 
-function handleJobCard(jobId: number) {
+const { data: jobs } =  useFetch<Jobs>("https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs")
+
+function handleJobCard(jobId: string) {
+  console.log(jobId)
   navigateTo(`jobs/${jobId}`)
 }
 </script>

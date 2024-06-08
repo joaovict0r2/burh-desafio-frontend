@@ -1,11 +1,11 @@
 <template>
   <nav class="navbar">
-    <Header :pathName="route.name" />
-
-    <div class="navbar__icon">
+    <NuxtLink class="navbar__icon" to="/jobs">
       <img src="/assets/images/globle.svg" alt="">
       <p>jobs.io</p>
-    </div>
+    </NuxtLink>
+
+    <Header :pathName="route.name" />
 
     <slot></slot>
   </nav>
@@ -28,6 +28,7 @@ const route = useRoute()
     width: 100%;
     top: 0;
     z-index: 1;
+    text-decoration: none;
   }
 
   img {

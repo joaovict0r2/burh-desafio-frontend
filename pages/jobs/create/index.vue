@@ -1,90 +1,39 @@
 <template>
-  <section class="create-job">
-    <p class="create-job__title">Informações da vaga</p>
+  <section class="create">
+    <p>Informações da vaga</p>
 
-    <form @submit.prevent="submitForm" class="create-job__form">  
-      <TextField
-        label="Nome"
-        class="create-job__field"
-        v-model="form.title"
-        placeholder="Nome da vaga"
-      />
-
-      <TextField
-        label="Empresa"
-        class="create-job__field"
-        v-model="form.company"
-        placeholder="Empresa responsável pela vaga"
-      />
-
-      <TagsManager
-        class="create-job__field"
-        :selected-tags="selectedTags"
-        @handle-selected-tag="handleSelectedTag"
-        @handle-remove-tag="handleRemoveTag"
-      />
-
-      <Editor class="create-job__field" label="Descrição da vaga" v-model="form.description" />
-
-      <button type="submit">Criar vaga</button>
-    </form>
+    <JobForm @submit="submitForm" />
   </section>
 </template>
   
 <script setup lang='ts'>
-import { useUserStore } from '~/store/UserStore';
+definePageMeta({ layout: "navbar" })
 
-const userStore = useUserStore()
-definePageMeta({
-  layout: "navbar"
-})
+async function submitForm(body: any) {
+  try {
+    await useFetch(
+      "https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs",
+      {
+        method: 'POST',
+        body: body
+      }
+    )
 
-type Tag = {
-  id: number,
-  title: string
-}
-
-const selectedTags = ref<Tag[]>([])
-const form = reactive({ 
-  title: '',
-  company: '',
-  from: '',
-  avatar: '',
-  description: ''
-})
-
-function submitForm() {
-  const payload = {
-    ...form,
-    selectedTags: [...selectedTags.value]
+    navigateTo('/jobs')
+  } catch (err) {
+    console.log(err)
   }
-  console.log(payload)
-  userStore.signin({ name: form.description })
-}
-
-function handleSelectedTag(tag: Tag) {
-  selectedTags.value = [ ...selectedTags.value, tag ]
-}
-
-function handleRemoveTag(tagId: number) {
-  selectedTags.value = selectedTags.value.filter((tag: Tag) => tag.id !== tagId)
 }
 </script>
   
 <style lang="scss" scoped>
-.create-job {
+.create {
   padding: 16px;
 
-  &__title {
+  p {
     font-size: 20px; 
     font-weight: 600;
     margin-bottom: 25px;
-  }
-
-  &__field {
-    & + & {
-      margin-top: 24px;
-    }
   }
 }
 </style>
