@@ -1,13 +1,13 @@
 <template>
   <div class="input">
-    <label for="input" class="input__label">{{ props.label }}</label>
+    <label for="input" class="input__label">{{ label }}</label>
     <input
       id="input"
       class="input__field"
       :class="{ 'textfield--invalid': error }"
-      :placeholder="props.placeholder"
+      :placeholder="placeholder"
       :type="type"
-      :value="props.modelValue"
+      :value="modelValue"
       @input="updateModelValue"
     />
   </div>
@@ -15,7 +15,7 @@
 
 <script setup lang='ts'>
 const emit = defineEmits(['update:modelValue'])
-const props = defineProps({
+defineProps({
   type: String,
   placeholder: String,
   label: String,
@@ -44,7 +44,6 @@ function updateModelValue(event: any) {
     border-radius: 8px;
     padding: 14px 18px 14px 18px;
     font-size: 16px;
-    margin-top: 6px;
 
     &--invalid {
       animation: shake .2s ease-in-out 0s 2;

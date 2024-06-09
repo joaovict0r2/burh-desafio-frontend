@@ -1,53 +1,56 @@
 <template>
   <div class="jobs">
+    <div class="jobs__search">
+      <Search />
+
+      <CButton width="50px" height="50px">
+        <Magnify />
+      </CButton> 
+    </div>
+
     <div class="jobs__list">
-      <div v-for="job in jobs" :key="job.title" class="jobs__card" @click="handleJobCard(job._id)">
-        <div class="jobs__card-header">
-          <img src="/assets/images/tripadvisor.webp" alt="">
-
-          <div>
-            <p>{{ job.title }}</p>
-            <p>{{ job.company }}</p>
-          </div>
-        </div>
-
-        <div v-if="job.selectedTags?.length" class="jobs__card-tags">
-          <Tag v-for="tag in job.selectedTags" :key="tag.id" :label="tag.title" />
-        </div>
-
-        <span class="jobs__card-date">Hoje</span>
-      </div>
+      <Card
+        v-for="job in jobs"
+        :key="job?.title"
+        :job="job"
+        @click="handleJobCard(job?._id)" 
+      />
     </div>
   </div>
 </template>
 
 <script setup lang='ts'>
-definePageMeta({
-  layout: 'navbar'
-})
+import Magnify from 'vue-material-design-icons/Magnify.vue'
 
-type Jobs = {
-  title: string
-  company: string
-  description: string
-  selectedTags: Array<{
-    id: number
-    title: string
-  }>
-}
+definePageMeta({ layout: 'navbar' })
+const { jobService } = useService()
 
-const { data: jobs } =  useFetch<Jobs>("https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs")
+const { data: jobs } = await useAsyncData(
+  () => jobService.getJobs()
+)
 
 function handleJobCard(jobId: string) {
-  console.log(jobId)
   navigateTo(`jobs/${jobId}`)
 }
 </script>
 
 <style lang="scss" scoped>
 .jobs {
+  padding: 16px;
+
+  &__search {
+    // width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    button {
+      width: 54px;
+    }
+  }
+
   &__list {
-    padding: 20px 16px 20px 16px;
+    margin-top: 20px;
   }
 
   &__card {

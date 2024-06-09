@@ -37,23 +37,18 @@ import OutlineListBox from 'vue-material-design-icons/ListBoxOutline.vue'
 import DotsCircle from 'vue-material-design-icons/DotsVerticalCircleOutline.vue'
 
 definePageMeta({ layout: "navbar" })
+const { jobService } = useService()
+
 const jobId = useRoute().params.id
 
-const { data: job } = useFetch(`https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs/${jobId}`)
+const { data: job } = await useAsyncData(
+  () => jobService.getJobById(jobId)
+)
 
 async function handleDeleteJob() {
-  try {
-    const { data: response } = await useFetch(
-      `https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs/${jobId}`, {
-        method: 'DELETE',
-      }
-    )
-
-    console.log(response)
-    navigateTo('/jobs')
-  } catch (err) {
-    console.log(err)
-  }
+  await jobService.deleteJob(jobId)
+    .then(() => { navigateTo('/jobs') })
+    .catch((err) => console.log(err))
 }
 
 function handleEditJob() {

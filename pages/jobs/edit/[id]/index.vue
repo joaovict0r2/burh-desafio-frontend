@@ -8,25 +8,17 @@
   
 <script setup lang='ts'>
 definePageMeta({ layout: "navbar" })
+const { jobService } = useService()
 const jobId = useRoute().params.id
 
-const { data: job } = useFetch(`https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs/${jobId}`)
+const { data: job } = await useAsyncData(
+  () => jobService.getJobById(jobId)
+)
 
 async function submitForm(body: any) {
-  console.log(body)
-  // try {
-  //   await useFetch(
-  //     "https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs",
-  //     {
-  //       method: 'PUT',
-  //       body: body
-  //     }
-  //   )
-
-  //   navigateTo('/jobs')
-  // } catch (err) {
-  //   console.log(err)
-  // }
+  await jobService.updateJob(body, jobId)
+    .then(() => { navigateTo('/jobs') })
+    .catch((err) => console.log(err))
 }
 </script>
   

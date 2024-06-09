@@ -8,7 +8,14 @@
         <p>Browse thousands of remote job listings to work at startups and leading companies.</p>
       </div>
   
-      <CButton text="Publicar uma vaga" mode="transparent" height="40px" width="100%" @click="createJob"/>
+      <CButton 
+        mode="transparent"
+        height="40px"
+        width="100%"
+        @click="createJob"
+      >
+        Publicar uma vaga
+      </CButton>
     </div>
   
     <img src="/assets/images/waves.svg" alt="wave-shape">

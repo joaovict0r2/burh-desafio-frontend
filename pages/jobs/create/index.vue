@@ -7,22 +7,15 @@
 </template>
   
 <script setup lang='ts'>
+import type { Job } from '~/services/JobService';
 definePageMeta({ layout: "navbar" })
 
-async function submitForm(body: any) {
-  try {
-    await useFetch(
-      "https://crudcrud.com/api/d9f23ab095df4764ab0d3d573db4dd86/jobs",
-      {
-        method: 'POST',
-        body: body
-      }
-    )
+const { jobService } = useService()
 
-    navigateTo('/jobs')
-  } catch (err) {
-    console.log(err)
-  }
+async function submitForm(body: Job) {
+  await jobService.createJob(body)
+    .then(() => { navigateTo('/jobs') })
+    .catch((err) => console.log(err))
 }
 </script>
   

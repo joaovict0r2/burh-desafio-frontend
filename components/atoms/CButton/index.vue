@@ -1,5 +1,11 @@
 4<template>
-  <button class="button" :class="{'button--transparent': props.mode === 'transparent' }" @click="$emit('click')">{{ props.text }}</button>
+  <button
+    class="button"
+    :class="{'button--transparent': props.mode === 'transparent' }"
+    @click="$emit('click')"
+  >
+    <slot />
+  </button>
 </template>
 
 <script setup lang='ts'>
@@ -14,6 +20,7 @@ type Props = {
 
 const props = defineProps<Props>()
 const width = computed(() => props.width)
+const height = computed(() => props.height)
 </script>
 
 <style lang="scss" scoped>
