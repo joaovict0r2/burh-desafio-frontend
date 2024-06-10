@@ -12,12 +12,14 @@
 import type { Job } from '~/services/JobService';
 definePageMeta({ layout: "navbar" })
 
+const toast = useToast()
+
 const { jobService } = useService()
 
 async function submitForm(body: Job) {
   await jobService.createJob(body)
     .then(() => { navigateTo('/jobs') })
-    .catch((err) => console.log(err))
+    .catch(() => toast.error('Algo deu errado'))
 }
 </script>
   

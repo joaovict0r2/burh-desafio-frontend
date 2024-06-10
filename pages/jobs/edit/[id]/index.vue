@@ -13,6 +13,8 @@ definePageMeta({ layout: "navbar" })
 const { jobService } = useService()
 const jobId = useRoute().params.id
 
+const toast = useToast()
+
 const { data: job } = await useAsyncData(
   () => jobService.getJobById(jobId)
 )
@@ -20,7 +22,7 @@ const { data: job } = await useAsyncData(
 async function submitForm(body: any) {
   await jobService.updateJob(body, jobId)
     .then(() => { navigateTo('/jobs') })
-    .catch((err) => console.log(err))
+    .catch(() => toast.error('Algo deu errado'))
 }
 </script>
   

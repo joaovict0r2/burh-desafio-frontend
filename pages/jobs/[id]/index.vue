@@ -41,7 +41,7 @@ import DotsCircle from 'vue-material-design-icons/DotsVerticalCircleOutline.vue'
 
 definePageMeta({ layout: "navbar" })
 const { jobService } = useService()
-
+const toast = useToast()
 const jobId = useRoute().params.id
 
 const { data: job } = await useAsyncData(
@@ -50,8 +50,8 @@ const { data: job } = await useAsyncData(
 
 async function handleDeleteJob() {
   await jobService.deleteJob(jobId)
-    .then(() => { navigateTo('/jobs') })
-    .catch((err) => console.log(err))
+    .then((res) => {navigateTo('/jobs')})
+    .catch(() => toast.error('Algo deu errado'))
 }
 
 function handleEditJob() {

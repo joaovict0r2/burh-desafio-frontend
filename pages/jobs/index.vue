@@ -1,7 +1,7 @@
 <template>
   <div class="jobs">
     <TextField v-model="searchedTerm" placeholder="Insira sua busca" />
-    <!-- <Filter label="Tags" class="jobs__filter">
+    <Filter label="Tags" class="jobs__filter">
       <template #content>
         <div class="jobs__filter-items">
           <Tag
@@ -13,7 +13,7 @@
           />
         </div>
       </template>
-    </Filter> -->
+    </Filter>
     
     <div class="jobs__list" v-if="!pending">
       <Card
@@ -83,7 +83,6 @@ function handleJobCard(jobId: string) {
 }
 
 function handleSelectedTag(tag: Tag) {
-  console.log(tag)
   const tagAlreadySelected = selectedTags.value.some((item: Tag) => item.id === tag.id)
 
   if (tagAlreadySelected) {

@@ -28,6 +28,6 @@ export default defineNuxtConfig({
   },
   components: [{ path: '~/components', pathPrefix: false }],
   build: {
-    transpile: ["vue-tosatification"]
+    transpile: ["vue-toastification"]
   }
 })
