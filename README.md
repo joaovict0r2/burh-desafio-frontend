@@ -55,3 +55,6 @@ Após tudo configurado e rodando, será possível navegar pelo projeto.
 - Cadastro de vagas: Onde é apresentado um formulário para cadastro de vaga.
 - Visualização de vagas: Após uma vaga cadastrada e estando na listagem, ao clicar em uma vaga, será redirecionado para página de visualização da vaga.
 - Edição de vagas: Estando na tela de visualização de vaga, será possível editar, assim levando para o formulário de edição.
+
+## Perfil
+<a href="https://burh.com.br/joaovictor35">Perfil Burh</a>
