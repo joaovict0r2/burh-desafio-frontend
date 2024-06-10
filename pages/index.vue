@@ -1,9 +1,8 @@
 <template>
   <div class="checkin">
     <div class="checkin__cover">
-      <h2>Introduce Your Product Quickly & Effectively</h2>
-      <p>Millions of businesses of all sizes — from startups to large enterprises — use this product to accept payments,
-        send payouts, and manage their businesses online.</p>
+      <h2>Apresente seu produto de forma rápida e eficaz</h2>
+      <p>Milhões de empresas de todos os tamanhos — desde startups até grandes empresas — usam este produto para cadastro de vagas, compartilhar vagas e gerenciar suas metas.</p>
 
       <div class="checkin__signin">
         <TextField placeholder="Entre com o seu nome" v-model="formData.name" @change="v$.name.$touch"

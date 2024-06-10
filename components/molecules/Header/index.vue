@@ -6,9 +6,9 @@
           <h2>Ola, {{ userStore.username }}</h2>
 
           <h2>
-            Discover the best remote jobs to work from home
+            Descubra os melhores empregos remotos para trabalhar em casa
           </h2>
-          <p>Browse thousands of remote job listings to work at startups and leading companies.</p>
+          <p>Navegue por milhares de listas de empregos remotos para trabalhar em startups e empresas líderes.</p>
         </div>
     
         <CButton 

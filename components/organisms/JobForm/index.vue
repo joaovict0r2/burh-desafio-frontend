@@ -116,7 +116,7 @@ const form = reactive<Omit<Form, "selectedTags" | "created_at">>({
   company_description: props.formInstance?.company_description ?? '',
   description: props.formInstance?.description ?? '',
   status: props.formInstance?.status ?? false,
-  salary: String(props.formInstance?.salary) ?? '',
+  salary: props.formInstance?.salary ?? '',
   limit_date: props.formInstance?.limit_date ?? ''
 })
 

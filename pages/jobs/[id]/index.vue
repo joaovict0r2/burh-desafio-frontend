@@ -30,7 +30,7 @@
         <p>Sobre</p>
       </div>
 
-      <p class="job__salary">Remuneração: {{ FormatCurrency(job?.salary) }}</p>
+      <p class="job__salary">Remuneração: {{ job?.salary }}</p>
       <p class="job__limit-date">Data limite de contratação: {{ FormatDate(job?.limit_date) }}</p>
 
       <p v-html="job?.description" class="job__content" />
