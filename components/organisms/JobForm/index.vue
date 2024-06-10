@@ -130,9 +130,9 @@ const formSchema = z.object({
 
 type formSchemaType = z.infer<typeof formSchema>
 const errors = ref<z.ZodFormattedError<formSchemaType> | null>(null)
-  onMounted(() => {
-    if (props.formInstance) {
-      console.log(props.formInstance)
+
+onMounted(() => {
+  if (props.formInstance) {
     selectedTags.value = props.formInstance.selectedTags
     nextTick()
   }

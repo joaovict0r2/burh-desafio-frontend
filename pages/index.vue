@@ -5,7 +5,7 @@
       <p>Milhões de empresas de todos os tamanhos — desde startups até grandes empresas — usam este produto para cadastro de vagas, compartilhar vagas e gerenciar suas metas.</p>
 
       <div class="checkin__signin">
-        <TextField placeholder="Entre com o seu nome" v-model="formData.name" @change="v$.name.$touch"
+        <TextField placeholder="Entre com o seu nome" v-model="form.name"
           :animated-error="isInputEmpty" />
         <CButton :width="'120px'" @click="signin">
           Entrar
@@ -21,27 +21,27 @@
 
 <script setup lang='ts'>
 import { reactive, ref } from 'vue'
-import { required } from '@vuelidate/validators'
-import useVuelidate from '@vuelidate/core'
 import { useUserStore } from '../store/UserStore'
+import * as z from 'zod'
 
 const userStore = useUserStore()
 const isInputEmpty = ref<boolean>()
+const form = reactive({ name: '' })
 
-const formData = reactive({ name: '' })
-const rules = { name: { required } }
-
-const v$ = useVuelidate(rules, formData)
+const formSchema = z.object({
+  name: z.string().min(1, { message: 'Campo obrigatório'})
+})
 
 async function signin() {
-  const isFormValid = await v$.value.$validate()
+  const validSchema = formSchema.safeParse(form)
 
-  if (!isFormValid) {
+  if (!validSchema.success) {
     isInputEmpty.value = true
     return
-  }
+  } 
 
-  userStore.signin({ name: formData.name })
+  userStore.signin({ name: form.name })
+  localStorage.setItem('app/username', form.name)
 }
 </script>
 

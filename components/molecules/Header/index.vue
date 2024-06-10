@@ -3,10 +3,10 @@
     <div class="header__wrapper">
       <div class="header__content">
         <div v-if="!isHeaderContentEnable" class="header__text">
-          <h2>Ola, {{ userStore.username }}</h2>
+          <h2>Olá, {{ username }}</h2>
 
           <h2>
-            Descubra os melhores empregos remotos para trabalhar em casa
+            Descubra os melhores empregos remotos para trabalhar em casa.
           </h2>
           <p>Navegue por milhares de listas de empregos remotos para trabalhar em startups e empresas líderes.</p>
         </div>
@@ -32,6 +32,16 @@ import type { RouteRecordName } from 'vue-router';
 import { useUserStore } from '~/store/UserStore';
 
 const userStore = useUserStore()
+const username = ref<string | null>(null)
+
+onMounted(() => {
+  if (!userStore.name) {
+    username.value = localStorage.getItem('app/username')
+    return
+  }
+
+  username.value = userStore.username
+})
 
 const props = defineProps({
   pathName: String as PropType<RouteRecordName | null>

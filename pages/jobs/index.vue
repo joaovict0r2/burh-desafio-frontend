@@ -12,7 +12,7 @@
       />
 
       <div v-else-if="!filteredJobs.length && !pending" class="jobs__not-found">
-        <p>Parece que não achamos vagas</p>
+        <p>Parece que não achamos vagas.</p>
         <span>
           Certifique-se de que as palavras estão escritas corretamente ou possui vagas cadastradas.
         </span>

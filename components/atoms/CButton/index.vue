@@ -43,6 +43,11 @@ const height = computed(() => props.height)
   &--transparent {
     background: transparent;
     border: 1px solid #fff;
+
+    &:hover {
+      transition: all .4s ease;
+      opacity: .8;
+    }
   }
 }
 </style>
