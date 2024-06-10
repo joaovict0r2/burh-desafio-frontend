@@ -49,7 +49,6 @@ type Tag = {
 
 definePageMeta({ layout: 'navbar' })
 const { jobService } = useService()
-
 onMounted(() => fetchJobs())
 
 const jobs = ref<Array<Job>>([])
