@@ -26,6 +26,7 @@
 defineProps({
   label: String
 })
+
 const isFilterOpened = ref(false)
 
 function toggleFilterState() {
