@@ -1,102 +1,145 @@
 <template>
   <div class="jobs">
-    <div class="jobs__search">
-      <Search />
-
-      <CButton width="50px" height="50px">
-        <Magnify />
-      </CButton> 
-    </div>
-
-    <div class="jobs__list">
+    <TextField v-model="searchedTerm" placeholder="Insira sua busca" />
+    <!-- <Filter label="Tags" class="jobs__filter">
+      <template #content>
+        <div class="jobs__filter-items">
+          <Tag
+            v-for="tag in tags"
+            :key="tag.id"
+            :label="tag.title"
+            color="transparent"
+            @click="handleSelectedTag(tag)"
+          />
+        </div>
+      </template>
+    </Filter> -->
+    
+    <div class="jobs__list" v-if="!pending">
       <Card
-        v-for="job in jobs"
+        v-if="filteredJobs.length"
+        v-for="job in filteredJobs"
         :key="job?.title"
         :job="job"
         @click="handleJobCard(job?._id)" 
       />
+
+      <div v-else-if="!filteredJobs.length && !pending" class="jobs__not-found">
+        <p>Parece que não achamos vagas</p>
+        <span>
+          Certifique-se de que as palavras estão escritas corretamente ou possui vagas cadastradas.
+        </span>
+      </div>
+    </div>
+
+    <div class="loading" v-else>
+      <DotLoading />
     </div>
   </div>
 </template>
 
 <script setup lang='ts'>
-import Magnify from 'vue-material-design-icons/Magnify.vue'
+import { tags } from '~/mocks/tags';
+import type { Job } from '~/services/JobService';
+
+type Tag = {
+  id: number
+  title: string
+}
 
 definePageMeta({ layout: 'navbar' })
 const { jobService } = useService()
 
-const { data: jobs } = await useAsyncData(
-  () => jobService.getJobs()
-)
+onMounted(() => fetchJobs())
+
+const jobs = ref<Array<Job>>([])
+const searchedTerm = ref<string>('')
+const selectedTags = ref<Tag[]>([])
+const pending = ref(true)
+
+const filteredJobs = computed(() => {
+  if (searchedTerm.value.trim().length > 0) {
+    return jobs.value.filter((job) => {
+      return (
+        job.title.toLocaleLowerCase().includes(searchedTerm.value.trim().toLocaleLowerCase())
+        || job.company.toLocaleLowerCase().includes(searchedTerm.value.trim().toLocaleLowerCase())
+      )
+    })
+  }
+
+  return jobs.value
+})
+
+async function fetchJobs() {
+  await jobService.getJobs()
+    .then((res) => {
+      jobs.value = res 
+      pending.value = false
+    })
+}
 
 function handleJobCard(jobId: string) {
   navigateTo(`jobs/${jobId}`)
+}
+
+function handleSelectedTag(tag: Tag) {
+  console.log(tag)
+  const tagAlreadySelected = selectedTags.value.some((item: Tag) => item.id === tag.id)
+
+  if (tagAlreadySelected) {
+    selectedTags.value = selectedTags.value.filter((item: Tag) => item.id !== tag.id)
+    return
+  }
+
+  selectedTags.value = [ ...selectedTags.value, tag ]
+}
+
+function isCurrentTagActive(tagId: number) {
+  return selectedTags.value.some((tag: Tag) => tag.id === tagId)
 }
 </script>
 
 <style lang="scss" scoped>
 .jobs {
-  padding: 16px;
-
-  &__search {
-    // width: 100%;
+  &__filter {
+    margin-top: 12px;
+  }
+  
+  &__filter-items {
+    padding: 16px;
     display: flex;
-    align-items: center;
-    gap: 6px;
-
-    button {
-      width: 54px;
-    }
+    width: 100%;
+    max-width: 350px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   &__list {
     margin-top: 20px;
   }
 
-  &__card {
-    padding: 16px;
-    border: 1px solid $gray-200;
-    border-radius: 8px;
-    position: relative;
+  &__not-found {
+    margin-top: 40px;
+    text-align: center;
 
-    & + & {
-      margin-top: 16px;
-    }
-  }
-
-  &__card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-    }
-
-    p:nth-child(1) {
+    p {
       font-size: 18px;
       font-weight: 600;
+      margin-bottom: 16px;
     }
 
-    p:nth-child(2) {
-      font-size: 14px;
+    span {
+      font-weight: 400;
     }
   }
+}
 
-  &__card-tags {
-    margin-top: 18px;
-    display: flex;
-    gap: 8px;
-  }
+.loading {
+  width: 100%;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &__card-date {
-    font-size: 14px;
-    opacity: .5;
-    position: absolute;
-    right: 6px;
-    top: 5px;
-  }
 }
 </style>

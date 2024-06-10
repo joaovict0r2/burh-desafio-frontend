@@ -1,7 +1,7 @@
 <template>
   <NuxtLink class="back" :to="path">
     <ChevronLeft />
-    Back
+    Voltar
   </NuxtLink>
 </template>
   
@@ -19,6 +19,7 @@ defineProps({ path: String })
   cursor: pointer;
   text-decoration: none;
   color: black;
+  margin-bottom: 18px;
 
   svg {
     width: 18px;

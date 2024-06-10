@@ -7,7 +7,11 @@
 
     <Header :pathName="route.name" />
 
-    <slot></slot>
+    <div class="navbar__content">
+      <div class="navbar__wrapper">
+        <slot></slot>
+      </div>
+    </div>
   </nav>
 </template>
   
@@ -40,6 +44,23 @@ const route = useRoute()
     font-size: 26px;
     color: #fff;
     font-weight: 700;
+  }
+
+  &__content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__wrapper {
+    width: 100%;
+    max-width: 1200px;
+    padding: 16px;
+    
+    @include rwd(1200) {
+      margin-top: 20px;
+      padding: 0;
+    }
   }
 }
 </style>

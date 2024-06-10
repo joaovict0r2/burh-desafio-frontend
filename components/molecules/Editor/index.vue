@@ -1,6 +1,13 @@
 <template>
   <div class="editor">
-    <label v-if="props.label" for="input" class="editor__label">{{ props.label }}</label>
+    <label
+      v-if="label"
+      for="input"
+      class="editor__label"
+    >
+      {{ label }}
+      <span v-if="required"> *</span>
+    </label>
 
     <section class="editor__buttons">
       <button
@@ -64,6 +71,8 @@
     </section>
 
     <TiptapEditorContent :editor="editor"/>
+
+    <span v-if="error" class="editor__error">{{ error }}</span>
   </div>
 </template>
 
@@ -79,7 +88,9 @@ import NumberListIcon from 'vue-material-design-icons/FormatListNumbered.vue'
 
 const props = defineProps({
   modelValue: String,
-  label: String
+  label: String,
+  required: Boolean,
+  error: String
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -104,6 +115,10 @@ onBeforeUnmount(() => {
 .editor {
   &__label {
     font-weight: 500;
+
+    span {
+      color: red;
+    }
   }
 
   &__buttons {
@@ -129,6 +144,11 @@ onBeforeUnmount(() => {
       border-radius: 4px;
     }
   }
+
+  &__error {
+    font-size: 12px;
+    color: red;
+  }
 }
 
 .tiptap {
@@ -139,6 +159,10 @@ onBeforeUnmount(() => {
   min-height: 12rem;
   max-height: 12rem;
   overflow-y: auto;
+
+  @include lg {
+    max-height: 20rem; 
+  }
 
   &:focus-visible {
     outline: none;

@@ -1,16 +1,19 @@
 <template>
   <div class="job">
-    <Back class="job__back-icon" path="/jobs" />
+    <Back path="/jobs" />
     
     <section class="job__header">
       <div class="job__header-icon">
         <h1 class="job__title">{{ job?.title }}</h1>
-        <!-- <DotsCircle /> -->
-        <button @click="handleEditJob">editar</button>
-        <button @click="handleDeleteJob">deletar</button>
+
+        <Dropdown 
+          @edit="handleEditJob"
+          @delete="handleDeleteJob"
+        />
       </div>
       <span>{{ job?.company }}</span>
-      <p>A experiência de trabalhar na Invillia é única. E global. Temos o nosso próprio jeito de conectar talentos e construir inovações.</p>
+      
+      <p>{{ job?.company_description }}</p>
 
       <div class="job__tags" v-if="job?.selectedTags.length">
         <Tag 
@@ -59,10 +62,7 @@ function handleEditJob() {
 <style lang="scss" scoped>
 .job {
   padding: 16px;
-
-  &__back-icon {
-    margin-bottom: 18px;
-  }
+  margin-bottom: 40px;
 
   span {
     font-size: 14px;
@@ -76,6 +76,16 @@ function handleEditJob() {
       font-size: 12px;
       font-weight: 500;
       margin-top: 14px;
+
+      @include lg {
+        font-size: 14px  
+      }
+    }
+
+    span {
+      @include lg {
+        font-size: 16px;
+      }
     }
   }
 
@@ -84,6 +94,11 @@ function handleEditJob() {
     align-items: center;
     justify-content: space-between;
 
+    @include lg {
+      justify-content: inherit;
+      gap: 14px;
+    }
+
     svg {
       color: black;
     }
@@ -91,10 +106,15 @@ function handleEditJob() {
 
   &__title {
     font-size: 24px;
-    font-weight: 600
+    font-weight: 600;
+
+    @include lg {
+      font-size: 32px;
+    }
   }
 
   &__title--with-icon {
+    font-size: 24px;
     display: flex;
     gap: 8px;
   }
@@ -108,7 +128,7 @@ function handleEditJob() {
   }
 
   &__about {
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   &__content {

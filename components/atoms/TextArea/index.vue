@@ -1,33 +1,33 @@
 <template>
-  <div class="input">
+  <div class="textarea">
     <label
       v-if="label"
-      for="input"
-      class="input__label"
+      for="textarea"
+      class="textarea__label"
     >
       {{ label }}
       <span v-if="required"> *</span>
     </label>
 
-    <input
+    <textarea
       id="input"
-      class="input__field"
-      :class="{ 
-        'input__field--with-label': label,
-        'input__field--animated-error': animatedError,
+      class="textarea__field"
+      :class="{
+        'textarea__field--with-label': label
       }"
       :placeholder="placeholder"
-      :type="type"
       :value="modelValue"
       @input="updateModelValue"
+      rows="7"
+      cols="50"
       autocomplete="off"
-    />
+    ></textarea>
 
-    <span v-if="error" class="input__error">{{ error }}</span>
+    <span v-if="error" class="textarea__error">{{ error }}</span>
   </div>
 </template>
 
-<script setup lang='ts'>
+<script setup lang="ts">
 const emit = defineEmits(['update:modelValue'])
 defineProps({
   type: String,
@@ -36,9 +36,8 @@ defineProps({
   error: String,
   modelValue: String,
   animatedError: Boolean,
-  required: Boolean
+  required: Boolean,
 })
-
 
 function updateModelValue(event: any) {
   emit('update:modelValue', event.target.value)
@@ -46,16 +45,18 @@ function updateModelValue(event: any) {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../assets/css/animations/shake.scss";
-
-.input {
+.textarea {
   width: 100%;
 
   &__label {
     font-weight: 500;
-    
+
+    &--error {
+      color: red;
+    }
+
     span {
-      color: red
+      color: red;
     }
   }
 
@@ -71,8 +72,8 @@ function updateModelValue(event: any) {
       margin-top: 6px;
     }
 
-    &--animated-error {
-      animation: shake .2s ease-in-out 0s 2;
+    &--error {
+      border-color: red;
     }
 
     &::placeholder {

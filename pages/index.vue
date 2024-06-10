@@ -7,8 +7,10 @@
 
       <div class="checkin__signin">
         <TextField placeholder="Entre com o seu nome" v-model="formData.name" @change="v$.name.$touch"
-          :error="isInputEmpty" />
-        <CButton text="Entrar" :width="'120px'" @click="signin" />
+          :animated-error="isInputEmpty" />
+        <CButton :width="'120px'" @click="signin">
+          Entrar
+        </CButton>
       </div>
     </div>
 
@@ -33,7 +35,6 @@ const rules = { name: { required } }
 const v$ = useVuelidate(rules, formData)
 
 async function signin() {
-  console.log('sdsd')
   const isFormValid = await v$.value.$validate()
 
   if (!isFormValid) {
@@ -50,6 +51,7 @@ async function signin() {
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 0 40px 0 40px;
 
   @include lg {
@@ -63,11 +65,16 @@ async function signin() {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
 
     h2 {
-      font-size: 60px;
+      font-size: 40px;
       font-weight: 700;
+
+      @include lg {
+        font-size: 60px
+      }
     }
 
     p {
@@ -76,7 +83,7 @@ async function signin() {
   }
 
   &__signin {
-    width: 500px;
+    width: 100%;
     display: flex;
     gap: 6px;
     margin-top: 20px;
@@ -91,7 +98,7 @@ async function signin() {
       display: none;
       transition: all 2s ease-out;
 
-      @include lg {
+      @include rwd(1200) {
         display: block;
         width: 50%;
       }

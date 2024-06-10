@@ -1,5 +1,7 @@
 <template>
   <section class="edit">
+    <Back :path="`/jobs/${jobId}`" />
+
     <p>Atualizar dados da vaga</p>
 
     <JobForm @submit="submitForm" :formInstance="job" />
@@ -25,6 +27,7 @@ async function submitForm(body: any) {
 <style lang="scss" scoped>
 .edit {
   padding: 16px;
+  margin-bottom: 40px;
 
   p {
     font-size: 20px; 

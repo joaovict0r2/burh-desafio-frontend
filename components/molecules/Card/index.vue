@@ -32,6 +32,7 @@ defineProps({
   border: 1px solid $gray-200;
   border-radius: 8px;
   position: relative;
+  cursor: pointer;
 
   & + & {
     margin-top: 16px;

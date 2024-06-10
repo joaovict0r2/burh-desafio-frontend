@@ -1,0 +1,8 @@
+@keyframes dot-flashing {
+  0% {
+    background-color: #0EAA99;
+  }
+  50%, 100% {
+    background-color: rgba(14, 170, 153, 0.2);
+  }
+}

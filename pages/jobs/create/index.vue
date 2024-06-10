@@ -1,5 +1,7 @@
 <template>
   <section class="create">
+    <Back path="/jobs" />
+
     <p>Informações da vaga</p>
 
     <JobForm @submit="submitForm" />
@@ -22,6 +24,7 @@ async function submitForm(body: Job) {
 <style lang="scss" scoped>
 .create {
   padding: 16px;
+  margin-bottom: 40px;
 
   p {
     font-size: 20px; 

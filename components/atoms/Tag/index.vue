@@ -1,18 +1,31 @@
 <template>
-  <div class="tag" :class="{'tag--transparent': props.color === 'transparent'}">
-    <img v-if="deleteable" src="/assets/images/cross-small.svg" alt="remove icon" @click="$emit('remove-tag')">
-    <p>{{ props.label }}</p>
+  <div
+    class="tag"
+    :class="{
+      'tag--transparent': color === 'transparent',
+      'tag--active': active
+    }"
+    @click="$emit('click')"
+  >
+    <img
+      v-if="deleteable"
+      src="/assets/images/cross-small.svg"
+      alt="remove icon"
+      @click="$emit('remove-tag')"
+    >
+    <p>{{ label }}</p>
   </div>
 </template>
   
 <script setup lang='ts'>
-type Props = {
-  label: string
-  color?: 'filled' | 'transparent'
-  deleteable?: boolean
-}
+import type { PropType } from 'vue';
 
-const props = defineProps<Props>()
+defineProps({
+  label: String,
+  color: String as PropType<'filled' | 'transparent'>,
+  deleteable: Boolean,
+  active: Boolean
+})
 </script>
   
 <style lang="scss" scoped>
@@ -23,6 +36,10 @@ const props = defineProps<Props>()
   border-radius: 25px;
   background-color: #0eaa991c;
   gap: 4px;
+
+  &--active {
+    background-color: aqua;
+  }
     
   &--transparent {
     background: transparent;

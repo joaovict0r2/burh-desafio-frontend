@@ -5,7 +5,9 @@ export type Job = {
   _id: string
   title: string
   company: string
+  company_description: string
   description: string
+  status: boolean
   selectedTags: Array<{
     id: number
     title: string
@@ -13,8 +15,8 @@ export type Job = {
 }
 
 export default (fetch: $Fetch<NitroFetchRequest>, config: RuntimeConfig) => ({
-  getJobs(): Promise<Job> {
-    return fetch<Job>(`${config.public.baseURL}/jobs`)
+  getJobs(): Promise<Job[]> {
+    return fetch<Job[]>(`${config.public.baseURL}/jobs`)
   },
 
   getJobById(jobId: string | string[]): Promise<Job> {
