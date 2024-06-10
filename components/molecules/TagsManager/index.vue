@@ -33,6 +33,7 @@ const props = defineProps({
 const selectingTagIsAvailable = computed(() => props.selectedTags.length < 3)
 
 function handleSelectedTag(tag: Tag){
+  console.log('ass')
   const tagAlreadySelected = props.selectedTags.some(item => item.id === tag.id)
 
   if (tagAlreadySelected) return

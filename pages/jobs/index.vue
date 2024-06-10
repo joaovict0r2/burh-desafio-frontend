@@ -1,19 +1,6 @@
 <template>
   <div class="jobs">
     <TextField v-model="searchedTerm" placeholder="Insira sua busca" />
-    <!-- <Filter label="Tags" class="jobs__filter">
-      <template #content>
-        <div class="jobs__filter-items">
-          <Tag
-            v-for="tag in tags"
-            :key="tag.id"
-            :label="tag.title"
-            color="transparent"
-            @click="handleSelectedTag(tag)"
-          />
-        </div>
-      </template>
-    </Filter> -->
     
     <div class="jobs__list" v-if="!pending">
       <Card
@@ -39,13 +26,7 @@
 </template>
 
 <script setup lang='ts'>
-import { tags } from '~/mocks/tags';
 import type { Job } from '~/services/JobService';
-
-type Tag = {
-  id: number
-  title: string
-}
 
 definePageMeta({ layout: 'navbar' })
 const { jobService } = useService()
@@ -54,7 +35,6 @@ onMounted(() => fetchJobs())
 
 const jobs = ref<Array<Job>>([])
 const searchedTerm = ref<string>('')
-const selectedTags = ref<Tag[]>([])
 const pending = ref(true)
 
 const filteredJobs = computed(() => {
@@ -73,28 +53,28 @@ const filteredJobs = computed(() => {
 async function fetchJobs() {
   await jobService.getJobs()
     .then((res) => {
-      jobs.value = res 
-      pending.value = false
+      const reversedArray = res.slice().reverse()
+      const sortedArray = reversedArray.sort((a, b) => {
+        if (a.status && !b.status) {
+          return -1;
+        }
+  
+        else if (!a.status && b.status) {
+          return 1;
+        }
+
+        else {
+          return 0;
+        }
+      })
+
+      jobs.value = sortedArray
     })
+    .finally(() => pending.value = false)
 }
 
 function handleJobCard(jobId: string) {
   navigateTo(`jobs/${jobId}`)
-}
-
-function handleSelectedTag(tag: Tag) {
-  const tagAlreadySelected = selectedTags.value.some((item: Tag) => item.id === tag.id)
-
-  if (tagAlreadySelected) {
-    selectedTags.value = selectedTags.value.filter((item: Tag) => item.id !== tag.id)
-    return
-  }
-
-  selectedTags.value = [ ...selectedTags.value, tag ]
-}
-
-function isCurrentTagActive(tagId: number) {
-  return selectedTags.value.some((tag: Tag) => tag.id === tagId)
 }
 </script>
 

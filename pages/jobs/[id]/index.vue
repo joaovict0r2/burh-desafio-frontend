@@ -30,14 +30,16 @@
         <p>Sobre</p>
       </div>
 
+      <p class="job__salary">Remuneração: {{ FormatCurrency(job?.salary) }}</p>
+      <p class="job__limit-date">Data limite de contratação: {{ FormatDate(job?.limit_date) }}</p>
+
       <p v-html="job?.description" class="job__content" />
     </section>
   </div>
 </template>
   
-<script setup lang="ts">
+<script setup>
 import OutlineListBox from 'vue-material-design-icons/ListBoxOutline.vue'
-import DotsCircle from 'vue-material-design-icons/DotsVerticalCircleOutline.vue'
 
 definePageMeta({ layout: "navbar" })
 const { jobService } = useService()
@@ -50,7 +52,7 @@ const { data: job } = await useAsyncData(
 
 async function handleDeleteJob() {
   await jobService.deleteJob(jobId)
-    .then((res) => {navigateTo('/jobs')})
+    .then(() => {navigateTo('/jobs')})
     .catch(() => toast.error('Algo deu errado'))
 }
 
@@ -61,7 +63,6 @@ function handleEditJob() {
   
 <style lang="scss" scoped>
 .job {
-  padding: 16px;
   margin-bottom: 40px;
 
   span {
@@ -129,6 +130,16 @@ function handleEditJob() {
 
   &__about {
     margin-top: 30px;
+  }
+
+  &__salary {
+    font-size: 14px;
+    margin-top: 12px;
+  }
+  
+  &__limit-date {
+    font-size: 14px;
+    margin-top: 2px;
   }
 
   &__content {

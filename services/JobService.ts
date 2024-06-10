@@ -8,6 +8,8 @@ export type Job = {
   company_description: string
   description: string
   status: boolean
+  salary: number
+  limit_date: string
   selectedTags: Array<{
     id: number
     title: string

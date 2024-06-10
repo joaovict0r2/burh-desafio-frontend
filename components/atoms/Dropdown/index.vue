@@ -50,6 +50,7 @@ function toggleDropdown() {
     right: 0;
     background-color: $gray-100;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    z-index: 1;
 
     p {
       cursor: pointer;

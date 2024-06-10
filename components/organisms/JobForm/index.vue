@@ -27,9 +27,25 @@
       placeholder="Um breve resumo sobre a empresa"
     ></TextArea>
 
+    <TextField
+      label="Remuneração"
+      class="form__field"      
+      ref="inputRef"
+      v-model="form.salary"
+      placeholder="Remuneração da vaga"
+    />
+
+    <TextField
+      label="Data limite de contratação"
+      class="form__field"      
+      required
+      type="date"
+      v-model="form.limit_date"
+      :error="errors?.limit_date?._errors[0]"
+    />
+
     <Switch
-      v-if="isEditing"
-      label="Vaga continua ativa?"
+      label="Vaga urgente?"
       class="form__field"
       v-model:checked="form.status"
     /> 
@@ -58,6 +74,7 @@
 <script setup lang='ts'>
 import { nextTick, onMounted, reactive, ref } from 'vue';
 import type { PropType } from 'vue';
+import { useCurrencyInput } from 'vue-currency-input';
 import * as z from 'zod'
 
 type Tag = {
@@ -71,10 +88,18 @@ type Form = {
   avatar: string
   company_description: string
   status: boolean
+  salary: string
+  limit_date: string | Date
   description: string
   selectedTags: Tag[]
   created_at: string
 }
+
+const { inputRef } = useCurrencyInput({
+  currency: 'BRL',
+  hideCurrencySymbolOnFocus: false,
+  hideGroupingSeparatorOnFocus: false,
+})
 
 const emit = defineEmits(['submit'])
 const props = defineProps({
@@ -90,7 +115,9 @@ const form = reactive<Omit<Form, "selectedTags" | "created_at">>({
   avatar: props.formInstance?.avatar ?? '',
   company_description: props.formInstance?.company_description ?? '',
   description: props.formInstance?.description ?? '',
-  status: props.formInstance?.status ?? true
+  status: props.formInstance?.status ?? false,
+  salary: String(props.formInstance?.salary) ?? '',
+  limit_date: props.formInstance?.limit_date ?? ''
 })
 
 const formSchema = z.object({
@@ -98,13 +125,14 @@ const formSchema = z.object({
   company: z.string().min(1, { message: "Campo obrigatório"}),
   company_description: z.string().min(1, { message: "Campo obrigatório"}),
   description: z.string().min(1, { message: "Campo obrigatório"}),
+  limit_date: z.string().min(1, { message: "Campo obrigatório" })
 })
 
 type formSchemaType = z.infer<typeof formSchema>
 const errors = ref<z.ZodFormattedError<formSchemaType> | null>(null)
-
-onMounted(() => {
-  if (props.formInstance) {
+  onMounted(() => {
+    if (props.formInstance) {
+      console.log(props.formInstance)
     selectedTags.value = props.formInstance.selectedTags
     nextTick()
   }
@@ -112,12 +140,12 @@ onMounted(() => {
 
 function submit() {
   const validSchema = formSchema.safeParse(form)
-  
+
   if (!validSchema.success) {
     errors.value = validSchema.error.format()
     return
   } 
-  
+   
   emit('submit', {
     ...form,
     selectedTags: [...selectedTags.value],

@@ -39,11 +39,13 @@ const emit = defineEmits(['handle-selected-tag'])
 const isSelectOpened = ref(false)
 
 function handleTagClick(tag: Tag) {
+  console.log('select')
   emit('handle-selected-tag', tag)
   toggleSelectState()
 }
 
 function toggleSelectState() {
+  console.log('sd')
   isSelectOpened.value = !isSelectOpened.value
 }
 </script>

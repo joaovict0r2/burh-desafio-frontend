@@ -25,7 +25,6 @@ async function submitForm(body: Job) {
   
 <style lang="scss" scoped>
 .create {
-  padding: 16px;
   margin-bottom: 40px;
 
   p {

@@ -10,10 +10,14 @@
     </div>
 
     <div v-if="job?.selectedTags?.length" class="card__tags">
-      <Tag v-for="tag in job?.selectedTags" :key="tag.id" :label="tag.title" />
+      <Tag
+        v-for="tag in job?.selectedTags"
+        :key="tag.id"
+        :label="tag.title"
+      />
     </div>
 
-    <span class="card__date">Hoje</span>
+    <span class="card__date">{{ job?.status ? 'Urgente' : '' }}</span>
   </section>
 </template>
   
