@@ -1,7 +1,7 @@
 <template>
   <section class="card" @click="$emit('click', job?._id)">
     <div class="card__header">
-      <img src="/assets/images/tripadvisor.webp" alt="">
+      <img src="/assets/images/5462190.jpg" alt="company logo">
 
       <div>
         <p>{{ job?.title }}</p>
