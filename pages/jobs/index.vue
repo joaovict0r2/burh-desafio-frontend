@@ -1,7 +1,7 @@
 <template>
   <div class="jobs">
     <TextField v-model="searchedTerm" placeholder="Insira sua busca" />
-    <Filter label="Tags" class="jobs__filter">
+    <!-- <Filter label="Tags" class="jobs__filter">
       <template #content>
         <div class="jobs__filter-items">
           <Tag
@@ -13,7 +13,7 @@
           />
         </div>
       </template>
-    </Filter>
+    </Filter> -->
     
     <div class="jobs__list" v-if="!pending">
       <Card
@@ -49,6 +49,7 @@ type Tag = {
 
 definePageMeta({ layout: 'navbar' })
 const { jobService } = useService()
+
 onMounted(() => fetchJobs())
 
 const jobs = ref<Array<Job>>([])
